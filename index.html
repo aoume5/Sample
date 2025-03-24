@@ -20,8 +20,8 @@
         let ballRadius = 10;
         let x = canvas.width / 2;
         let y = canvas.height - 30;
-        let dx = 2;
-        let dy = -2;
+        let dx = 5;  // 玉の速度（横方向）
+        let dy = -5; // 玉の速度（縦方向）
 
         let paddleHeight = 10;
         let paddleWidth = 75;
@@ -46,8 +46,12 @@
             }
         }
 
+        // キー操作
         document.addEventListener("keydown", keyDownHandler, false);
         document.addEventListener("keyup", keyUpHandler, false);
+
+        // スマホ対応：タッチ操作
+        canvas.addEventListener("touchmove", touchMoveHandler, false);
 
         function keyDownHandler(e) {
             if (e.key == "Right" || e.key == "ArrowRight") {
@@ -62,6 +66,14 @@
                 rightPressed = false;
             } else if (e.key == "Left" || e.key == "ArrowLeft") {
                 leftPressed = false;
+            }
+        }
+
+        // スマホ対応：タッチ操作のハンドラー
+        function touchMoveHandler(e) {
+            const touchX = e.touches[0].clientX - canvas.offsetLeft;
+            if (touchX > paddleWidth / 2 && touchX < canvas.width - paddleWidth / 2) {
+                paddleX = touchX - paddleWidth / 2;
             }
         }
 
